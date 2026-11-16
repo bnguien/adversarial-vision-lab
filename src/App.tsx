@@ -4,7 +4,6 @@ import {
   ChevronUp,
   RotateCcw,
   Shield,
-  SlidersHorizontal,
   Upload,
   X,
 } from 'lucide-react';
@@ -40,35 +39,35 @@ function ComparisonCard({
   const pct = Math.max(0, Math.min(100, Math.round(pred.confidence * 100)));
 
   let truthLabel = '';
-  if (pred.isCorrect === true) truthLabel = ' · GROUND TRUTH MATCH';
-  else if (pred.isCorrect === false) truthLabel = ' · MISCLASSIFIED';
+  if (pred.isCorrect === true) truthLabel = ' · ĐÚNG NHÃN THỰC TẾ';
+  else if (pred.isCorrect === false) truthLabel = ' · DỰ ĐOÁN SAI';
 
   return (
-    <article className="bg-white border-2 border-[#1E242B] rounded-lg nb-shadow overflow-hidden flex flex-col">
-      {/* Subtle Pastel Header Band */}
+    <article className="bg-white border-[1.5px] border-[#262D35] rounded-xl nb-shadow overflow-hidden flex flex-col">
+      {/* Soft Pastel Header Band */}
       <div
-        className={`border-b-2 border-[#1E242B] px-4 py-2.5 flex items-center justify-between gap-2 ${bandBg}`}
+        className={`border-b-[1.5px] border-[#262D35] px-4 py-2.5 flex items-center justify-between gap-2 ${bandBg}`}
       >
-        <h2 className="font-display font-extrabold text-base tracking-tight text-[#1E242B] whitespace-nowrap">
+        <h2 className="font-display font-extrabold text-base tracking-tight text-[#262D35] whitespace-nowrap">
           {title}
         </h2>
-        <span className="font-mono-tabular text-[11px] font-bold bg-white border-[1.5px] border-[#1E242B] rounded px-2 py-0.5 text-[#1E242B] whitespace-nowrap truncate max-w-[170px]">
+        <span className="font-mono-tabular text-[11px] font-bold bg-white border border-[#262D35] rounded-md px-2 py-0.5 text-[#262D35] whitespace-nowrap truncate max-w-[170px]">
           {badgeText}
         </span>
       </div>
 
       {/* Consistent Square Preview */}
       <div className="p-4 pb-3 bg-white">
-        <div className="border-2 border-[#1E242B] rounded-md bg-[#181A1F] aspect-square w-full overflow-hidden flex items-center justify-center">
+        <div className="border-[1.5px] border-[#262D35] rounded-lg bg-[#1C2026] aspect-square w-full overflow-hidden flex items-center justify-center">
           {imageUrl ? (
             <img
               src={imageUrl}
-              alt={`${title} sample preview`}
+              alt={`Xem trước ${title}`}
               className="w-full h-full object-cover block"
             />
           ) : (
             <div className="text-white font-mono-tabular text-xs">
-              RENDERING PREVIEW
+              ĐANG TẠO ẢNH...
             </div>
           )}
         </div>
@@ -77,33 +76,33 @@ function ComparisonCard({
       {/* Prediction & Metadata */}
       <div className="px-4 pb-4 pt-1 flex-1 flex flex-col justify-between gap-3">
         <div>
-          <div className="font-mono-tabular text-[11px] font-bold uppercase tracking-wider text-[#5A626E]">
-            Predicted Class
+          <div className="font-mono-tabular text-[11px] font-bold uppercase tracking-wider text-[#64748B]">
+            Lớp dự đoán (Predicted Class)
           </div>
           <div className="flex items-baseline justify-between gap-2 mt-0.5">
-            <div className="font-display font-extrabold text-xl leading-tight text-[#1E242B] truncate">
+            <div className="font-display font-extrabold text-xl leading-tight text-[#262D35] truncate">
               {pred.predictedClass}
             </div>
-            <div className="font-mono-tabular font-bold text-lg text-[#1E242B] shrink-0">
+            <div className="font-mono-tabular font-bold text-lg text-[#262D35] shrink-0">
               {(pred.confidence * 100).toFixed(1)}%
             </div>
           </div>
 
-          {/* Crisp confidence bar */}
-          <div className="w-full h-3 bg-[#F3F2EC] border-[1.5px] border-[#1E242B] rounded-sm overflow-hidden mt-2">
+          {/* Crisp light confidence bar */}
+          <div className="w-full h-2.5 bg-[#F4F3EE] border border-[#262D35] rounded-sm overflow-hidden mt-2">
             <div
-              className="h-full border-r-[1.5px] border-[#1E242B] transition-[width] duration-150"
+              className="h-full border-r border-[#262D35] transition-[width] duration-150"
               style={{ width: `${pct}%`, backgroundColor: barColor }}
             />
           </div>
 
-          <div className="font-mono-tabular text-[11px] font-bold text-[#333A44] mt-2">
+          <div className="font-mono-tabular text-[11px] font-bold text-[#475569] mt-2">
             {pred.statusTag}
             {truthLabel}
           </div>
         </div>
 
-        <div className="bg-[#FAF9F5] border-[1.5px] border-[#1E242B] rounded-md px-3 py-2 font-mono-tabular text-xs leading-relaxed text-[#2C333D]">
+        <div className="bg-[#FBFAF7] border border-[#262D35] rounded-lg px-3 py-2 font-mono-tabular text-xs leading-relaxed text-[#334155]">
           {pred.metadataLines.map((line, i) => (
             <div key={i}>{line}</div>
           ))}
@@ -262,25 +261,28 @@ export default function App() {
   ).toFixed(1)}%`;
 
   return (
-    <div className="min-h-screen bg-[#FAF9F5] text-[#1E242B] flex flex-col lg:flex-row">
-      {/* LEFT CONFIGURATION SIDEBAR */}
-      <aside className="w-full lg:w-[330px] shrink-0 bg-white border-b-2 lg:border-b-0 lg:border-r-2 border-[#1E242B] p-5 flex flex-col gap-4">
-        <div className="bg-[#FEF3C7] border-2 border-[#1E242B] rounded-md nb-shadow-sm px-3.5 py-2.5 flex items-center justify-between gap-2">
-          <div>
-            <div className="font-display font-extrabold text-sm tracking-tight leading-tight">
-              CONFIGURATION
-            </div>
-            <div className="font-mono-tabular text-[11px] font-bold text-[#4B5563] mt-0.5">
-              MOCK CONTROLS · LIVE UPDATE
+    <div className="min-h-screen bg-[#FBFAF7] text-[#262D35] flex flex-col lg:flex-row">
+      {/* THANH CẤU HÌNH BÊN TRÁI */}
+      <aside className="w-full lg:w-[325px] shrink-0 bg-white border-b-[1.5px] lg:border-b-0 lg:border-r-[1.5px] border-[#262D35] p-5 flex flex-col gap-4">
+        {/* Tiêu đề chính trong ô đầu sidebar */}
+        <div className="bg-[#FEF9E7] border-[1.5px] border-[#262D35] rounded-lg nb-shadow-sm px-3.5 py-3 flex items-center justify-between gap-2.5">
+          <div className="min-w-0">
+            <h1 className="font-display font-black text-lg tracking-tight leading-tight text-[#262D35]">
+              Adversarial Vision Lab
+            </h1>
+            <div className="font-mono-tabular text-[11px] font-bold text-[#525E6B] mt-0.5">
+              DEMO MODE · DỮ LIỆU GIẢ LẬP
             </div>
           </div>
-          <SlidersHorizontal className="w-4 h-4 shrink-0" strokeWidth={2.25} />
+          <div className="w-8 h-8 bg-white border border-[#262D35] rounded-md flex items-center justify-center shrink-0">
+            <Shield className="w-4 h-4 text-[#262D35]" strokeWidth={2.1} />
+          </div>
         </div>
 
-        {/* 1. Image Input & Sample Selector */}
+        {/* 1. Ảnh đầu vào & Mẫu có sẵn */}
         <section className="flex flex-col gap-2">
-          <label className="font-display font-bold text-xs uppercase tracking-wider text-[#333A44]">
-            1. Input Image
+          <label className="font-display font-bold text-xs uppercase tracking-wider text-[#475569]">
+            1. Ảnh đầu vào
           </label>
 
           <input
@@ -295,34 +297,34 @@ export default function App() {
           <div className="flex items-stretch gap-2">
             <label
               htmlFor="image-upload-input"
-              className="flex-1 cursor-pointer bg-[#FAF9F5] hover:bg-[#FEF3C7] border-2 border-[#1E242B] rounded-md nb-shadow-btn px-3 py-2 flex items-center justify-center gap-2 font-display font-bold text-sm transition-colors"
+              className="flex-1 cursor-pointer bg-[#FBFAF7] hover:bg-[#FEF9E7] border-[1.5px] border-[#262D35] rounded-lg nb-shadow-btn px-3 py-2 flex items-center justify-center gap-2 font-display font-bold text-sm transition-colors"
             >
-              <Upload className="w-4 h-4 shrink-0" strokeWidth={2.25} />
+              <Upload className="w-4 h-4 shrink-0" strokeWidth={2} />
               <span className="truncate">
-                {uploadedFileName ? uploadedFileName : 'Upload Custom Image'}
+                {uploadedFileName ? uploadedFileName : 'Tải ảnh lên'}
               </span>
             </label>
             {uploadedFileName && (
               <button
                 type="button"
                 onClick={clearUpload}
-                aria-label="Clear uploaded image"
-                className="bg-[#FECACA] hover:bg-[#FCA5A5] border-2 border-[#1E242B] rounded-md nb-shadow-btn px-2.5 flex items-center justify-center cursor-pointer"
+                aria-label="Xóa ảnh đã tải lên"
+                className="bg-[#FFF0ED] hover:bg-[#FFE2DC] border-[1.5px] border-[#262D35] rounded-lg nb-shadow-btn px-2.5 flex items-center justify-center cursor-pointer"
               >
-                <X className="w-4 h-4" strokeWidth={2.25} />
+                <X className="w-4 h-4" strokeWidth={2} />
               </button>
             )}
           </div>
 
           <div className="flex flex-col gap-1 mt-0.5">
-            <span className="font-mono-tabular text-[11px] font-bold text-[#5A626E]">
-              DEMO SAMPLE PRESET
+            <span className="font-mono-tabular text-[11px] font-bold text-[#64748B]">
+              HOẶC CHỌN ẢNH MẪU
             </span>
             <select
               value={sampleId}
               disabled={Boolean(uploadedImgEl)}
               onChange={(e) => handleSampleChange(e.target.value)}
-              className="w-full bg-white disabled:bg-[#F1F5F9] disabled:opacity-60 border-2 border-[#1E242B] rounded-md nb-shadow-sm px-3 py-2 font-semibold text-sm cursor-pointer focus:outline-none"
+              className="w-full bg-white disabled:bg-[#F4F6F8] disabled:opacity-60 border-[1.5px] border-[#262D35] rounded-lg nb-shadow-sm px-3 py-2 font-semibold text-sm cursor-pointer focus:outline-none"
             >
               {SAMPLES.map((s) => (
                 <option key={s.id} value={s.id}>
@@ -333,21 +335,21 @@ export default function App() {
           </div>
         </section>
 
-        <hr className="border-t border-[#D6D3C9]" />
+        <hr className="border-t border-[#E4E2DA]" />
 
-        {/* 2. Model Selection */}
+        {/* 2. Chọn Model */}
         <section className="flex flex-col gap-1.5">
           <label
             htmlFor="model-select"
-            className="font-display font-bold text-xs uppercase tracking-wider text-[#333A44]"
+            className="font-display font-bold text-xs uppercase tracking-wider text-[#475569]"
           >
-            2. Model Selection
+            2. Chọn Model
           </label>
           <select
             id="model-select"
             value={modelId}
             onChange={(e) => setModelId(e.target.value)}
-            className="w-full bg-white border-2 border-[#1E242B] rounded-md nb-shadow-sm px-3 py-2 font-semibold text-sm cursor-pointer focus:outline-none"
+            className="w-full bg-white border-[1.5px] border-[#262D35] rounded-lg nb-shadow-sm px-3 py-2 font-semibold text-sm cursor-pointer focus:outline-none"
           >
             {Object.values(MODELS).map((m) => (
               <option key={m.id} value={m.id}>
@@ -355,17 +357,17 @@ export default function App() {
               </option>
             ))}
           </select>
-          <div className="font-mono-tabular text-[11px] text-[#5A626E]">
+          <div className="font-mono-tabular text-[11px] text-[#64748B]">
             {MODELS[modelId].dataset} · Clean Acc: {MODELS[modelId].cleanAccuracy}
           </div>
         </section>
 
-        <hr className="border-t border-[#D6D3C9]" />
+        <hr className="border-t border-[#E4E2DA]" />
 
-        {/* 3. Attack Method & Epsilon */}
+        {/* 3. Phương pháp tấn công & Epsilon */}
         <section className="flex flex-col gap-2.5">
-          <div className="font-display font-bold text-xs uppercase tracking-wider text-[#333A44]">
-            3. Adversarial Attack
+          <div className="font-display font-bold text-xs uppercase tracking-wider text-[#475569]">
+            3. Tấn công (Adversarial Attack)
           </div>
 
           <div className="grid grid-cols-2 gap-2">
@@ -376,10 +378,10 @@ export default function App() {
                   key={method}
                   type="button"
                   onClick={() => setAttackMethod(method)}
-                  className={`py-2 px-3 border-2 border-[#1E242B] rounded-md font-display font-extrabold text-sm cursor-pointer nb-shadow-btn ${
+                  className={`py-2 px-3 border-[1.5px] border-[#262D35] rounded-lg font-display font-extrabold text-sm cursor-pointer nb-shadow-btn ${
                     active
-                      ? 'bg-[#FECACA] text-[#1E242B]'
-                      : 'bg-white text-[#1E242B] hover:bg-[#FAF9F5]'
+                      ? 'bg-[#FFF0ED] text-[#262D35]'
+                      : 'bg-white text-[#262D35] hover:bg-[#FBFAF7]'
                   }`}
                 >
                   {method}
@@ -396,7 +398,7 @@ export default function App() {
               >
                 EPSILON (ε)
               </label>
-              <span className="font-mono-tabular text-xs font-bold bg-[#FEF3C7] border-[1.5px] border-[#1E242B] rounded px-2 py-0.5">
+              <span className="font-mono-tabular text-xs font-bold bg-[#FEF9E7] border border-[#262D35] rounded px-2 py-0.5">
                 {epsilon.toFixed(2)}
               </span>
             </div>
@@ -410,20 +412,20 @@ export default function App() {
               onChange={(e) => setEpsilon(parseFloat(e.target.value))}
               className="nb-range"
             />
-            <div className="flex justify-between font-mono-tabular text-[10px] font-bold text-[#5A626E] mt-1">
-              <span>0.00 (CLEAN)</span>
+            <div className="flex justify-between font-mono-tabular text-[10px] font-bold text-[#64748B] mt-1">
+              <span>0.00 (ẢNH GỐC)</span>
               <span>0.15</span>
-              <span>0.30 (STRONG)</span>
+              <span>0.30 (MẠNH)</span>
             </div>
           </div>
         </section>
 
-        <hr className="border-t border-[#D6D3C9]" />
+        <hr className="border-t border-[#E4E2DA]" />
 
-        {/* 4. Defense Method */}
+        {/* 4. Phương pháp phòng thủ */}
         <section className="flex flex-col gap-2">
-          <div className="font-display font-bold text-xs uppercase tracking-wider text-[#333A44]">
-            4. Defense Method
+          <div className="font-display font-bold text-xs uppercase tracking-wider text-[#475569]">
+            4. Phòng thủ (Defense)
           </div>
           <div className="grid grid-cols-1 gap-2">
             {DEFENSE_METHODS.map((def) => {
@@ -433,15 +435,15 @@ export default function App() {
                   key={def}
                   type="button"
                   onClick={() => setDefenseMethod(def)}
-                  className={`w-full text-left px-3 py-2 border-2 border-[#1E242B] rounded-md font-display font-bold text-sm cursor-pointer flex items-center justify-between nb-shadow-btn ${
+                  className={`w-full text-left px-3 py-2 border-[1.5px] border-[#262D35] rounded-lg font-display font-bold text-sm cursor-pointer flex items-center justify-between nb-shadow-btn ${
                     active
-                      ? 'bg-[#D1FAE5] text-[#1E242B]'
-                      : 'bg-white text-[#1E242B] hover:bg-[#FAF9F5]'
+                      ? 'bg-[#EAFBF0] text-[#262D35]'
+                      : 'bg-white text-[#262D35] hover:bg-[#FBFAF7]'
                   }`}
                 >
                   <span>{def}</span>
-                  <span className="font-mono-tabular text-[11px] font-bold text-[#333A44]">
-                    {active ? 'ACTIVE' : 'SELECT'}
+                  <span className="font-mono-tabular text-[11px] font-bold text-[#475569]">
+                    {active ? 'ĐANG CHỌN' : 'CHỌN'}
                   </span>
                 </button>
               );
@@ -449,26 +451,26 @@ export default function App() {
           </div>
         </section>
 
-        {/* 5. Advanced Settings Accordion */}
-        <section className="border-2 border-[#1E242B] rounded-md bg-[#FAF9F5] nb-shadow-sm overflow-hidden">
+        {/* 5. Cài đặt nâng cao */}
+        <section className="border-[1.5px] border-[#262D35] rounded-lg bg-[#FBFAF7] nb-shadow-sm overflow-hidden">
           <button
             type="button"
             onClick={() => setAdvancedOpen((prev) => !prev)}
-            className="w-full px-3.5 py-2 flex items-center justify-between font-display font-bold text-xs uppercase tracking-wider cursor-pointer bg-[#FAF9F5] hover:bg-[#FEF3C7] transition-colors"
+            className="w-full px-3.5 py-2 flex items-center justify-between font-display font-bold text-xs uppercase tracking-wider cursor-pointer bg-[#FBFAF7] hover:bg-[#FEF9E7] transition-colors"
           >
-            <span>Advanced Settings</span>
+            <span>Cài đặt nâng cao</span>
             {advancedOpen ? (
-              <ChevronUp className="w-4 h-4" strokeWidth={2.25} />
+              <ChevronUp className="w-4 h-4" strokeWidth={2} />
             ) : (
-              <ChevronDown className="w-4 h-4" strokeWidth={2.25} />
+              <ChevronDown className="w-4 h-4" strokeWidth={2} />
             )}
           </button>
 
           {advancedOpen && (
-            <div className="p-3.5 pt-2.5 border-t-2 border-[#1E242B] flex flex-col gap-3 bg-white">
+            <div className="p-3.5 pt-2.5 border-t-[1.5px] border-[#262D35] flex flex-col gap-3 bg-white">
               <div>
                 <div className="flex justify-between font-mono-tabular text-xs font-bold mb-1">
-                  <span>PGD STEPS</span>
+                  <span>SỐ BƯỚC PGD (STEPS)</span>
                   <span>{pgdSteps}</span>
                 </div>
                 <input
@@ -484,7 +486,7 @@ export default function App() {
 
               <div>
                 <div className="flex justify-between font-mono-tabular text-xs font-bold mb-1">
-                  <span>PGD STEP SIZE (α)</span>
+                  <span>STEP SIZE (α)</span>
                   <span>{pgdAlpha.toFixed(3)}</span>
                 </div>
                 <input
@@ -532,7 +534,7 @@ export default function App() {
 
               <div>
                 <div className="flex justify-between font-mono-tabular text-xs font-bold mb-1">
-                  <span>BIT-DEPTH BITS</span>
+                  <span>BIT-DEPTH (SỐ BIT)</span>
                   <span>{bitDepth}-bit</span>
                 </div>
                 <input
@@ -548,7 +550,7 @@ export default function App() {
 
               <div>
                 <div className="flex justify-between font-mono-tabular text-xs font-bold mb-1">
-                  <span>VISUAL NOISE AMP</span>
+                  <span>KHUẾCH ĐẠI NHIỄU HIỂN THỊ</span>
                   <span>{visualAmp.toFixed(1)}x</span>
                 </div>
                 <input
@@ -568,103 +570,82 @@ export default function App() {
         <button
           type="button"
           onClick={resetDefaults}
-          className="mt-auto bg-white hover:bg-[#FEF3C7] border-2 border-[#1E242B] rounded-md nb-shadow-btn py-2 px-4 font-display font-bold text-sm flex items-center justify-center gap-2 cursor-pointer"
+          className="mt-auto bg-white hover:bg-[#FEF9E7] border-[1.5px] border-[#262D35] rounded-lg nb-shadow-btn py-2 px-4 font-display font-bold text-sm flex items-center justify-center gap-2 cursor-pointer"
         >
-          <RotateCcw className="w-4 h-4" strokeWidth={2.25} />
-          <span>Reset Demo Defaults</span>
+          <RotateCcw className="w-4 h-4" strokeWidth={2} />
+          <span>Khôi phục mặc định</span>
         </button>
       </aside>
 
-      {/* MAIN WORKSPACE */}
+      {/* VÙNG HIỂN THỊ CHÍNH */}
       <main className="flex-1 min-w-0 p-5 md:p-7 flex flex-col gap-5 max-w-[1440px]">
-        {/* Header Bar */}
-        <header className="bg-white border-2 border-[#1E242B] rounded-lg nb-shadow px-5 py-3.5 flex flex-wrap items-center justify-between gap-4">
-          <div className="flex items-center gap-3.5">
-            <div className="w-10 h-10 bg-[#FEF3C7] border-2 border-[#1E242B] rounded-md flex items-center justify-center shrink-0">
-              <Shield className="w-5 h-5 text-[#1E242B]" strokeWidth={2.25} />
-            </div>
-            <div>
-              <h1 className="font-display font-black text-2xl tracking-tight leading-none">
-                Adversarial Vision Lab
-              </h1>
-              <p className="text-sm font-medium text-[#4B5563] mt-1">
-                Single-page attack &amp; defense comparison workspace · Layout inspired by Irene Adversarial Vision Lab
-              </p>
-            </div>
-          </div>
-
-          <div className="bg-[#FEF3C7] border-2 border-[#1E242B] rounded-md nb-shadow-sm px-3 py-1.5 font-mono-tabular font-bold text-xs whitespace-nowrap shrink-0">
-            DEMO MODE · MOCK DATA ONLY
-          </div>
-        </header>
-
-        {/* Three Large Side-by-Side Image Comparison Cards */}
+        {/* Ba khung ảnh so sánh song song */}
         <section
-          aria-label="Original, Attacked, and Defended visual comparison"
+          aria-label="So sánh Ảnh gốc, Bị tấn công và Đã phòng thủ"
           className="grid grid-cols-1 md:grid-cols-3 gap-5"
         >
           <ComparisonCard
-            title="ORIGINAL"
-            bandBg="bg-[#F1F5F9]"
-            badgeText="CLEAN"
+            title="ẢNH GỐC"
+            bandBg="bg-[#F4F6F8]"
+            badgeText="ORIGINAL · CLEAN"
             imageUrl={previews.originalUrl}
             pred={analysis.originalPred}
-            barColor="#60A5FA"
+            barColor="#93C5FD"
           />
 
           <ComparisonCard
-            title="ATTACKED"
-            bandBg="bg-[#FFE4DF]"
+            title="BỊ TẤN CÔNG"
+            bandBg="bg-[#FFF0ED]"
             badgeText={`${attackMethod} · ε=${epsilon.toFixed(2)}`}
             imageUrl={previews.attackedUrl}
             pred={analysis.attackedPred}
-            barColor="#F87171"
+            barColor="#FCA5A5"
           />
 
           <ComparisonCard
-            title="DEFENDED"
-            bandBg="bg-[#DCFCE7]"
+            title="ĐÃ PHÒNG THỦ"
+            bandBg="bg-[#EAFBF0]"
             badgeText={defenseMethod.toUpperCase()}
             imageUrl={previews.defendedUrl}
             pred={analysis.defendedPred}
-            barColor="#34D399"
+            barColor="#6EE7B7"
           />
         </section>
 
-        {/* Analysis Summary Section */}
-        <section className="bg-white border-2 border-[#1E242B] rounded-lg nb-shadow overflow-hidden">
-          <div className="bg-[#FEF3C7] border-b-2 border-[#1E242B] px-5 py-2.5 flex flex-wrap items-center justify-between gap-2">
+        {/* Tóm tắt phân tích */}
+        <section className="bg-white border-[1.5px] border-[#262D35] rounded-xl nb-shadow overflow-hidden">
+          <div className="bg-[#FEF9E7] border-b-[1.5px] border-[#262D35] px-5 py-2.5 flex flex-wrap items-center justify-between gap-2">
             <h2 className="font-display font-extrabold text-base tracking-tight">
-              ANALYSIS SUMMARY
+              TÓM TẮT PHÂN TÍCH
             </h2>
-            <span className="font-mono-tabular text-[11px] font-bold bg-white border-[1.5px] border-[#1E242B] rounded px-2.5 py-0.5">
-              SIMULATED METRICS · NO REAL INFERENCE
+            <span className="font-mono-tabular text-[11px] font-bold bg-white border border-[#262D35] rounded-md px-2.5 py-0.5">
+              SỐ LIỆU GIẢ LẬP · KHÔNG CHẠY MODEL THẬT
             </span>
           </div>
 
           <div className="p-5 flex flex-col gap-4">
             <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-3.5">
-              <div className="bg-[#FAF9F5] border-[1.5px] border-[#1E242B] rounded-md px-3.5 py-2.5">
-                <div className="font-mono-tabular text-[11px] font-bold uppercase text-[#5A626E]">
-                  Selected Attack
+              <div className="bg-[#FBFAF7] border border-[#262D35] rounded-lg px-3.5 py-2.5">
+                <div className="font-mono-tabular text-[11px] font-bold uppercase text-[#64748B]">
+                  Attack đã chọn
                 </div>
                 <div className="font-display font-extrabold text-base mt-0.5">
                   {attackMethod} (ε = {epsilon.toFixed(2)})
                 </div>
               </div>
 
-              <div className="bg-[#FAF9F5] border-[1.5px] border-[#1E242B] rounded-md px-3.5 py-2.5">
-                <div className="font-mono-tabular text-[11px] font-bold uppercase text-[#5A626E]">
-                  Selected Defense
+              <div className="bg-[#FBFAF7] border border-[#262D35] rounded-lg px-3.5 py-2.5">
+                <div className="font-mono-tabular text-[11px] font-bold uppercase text-[#64748B]">
+                  Defense đã chọn
                 </div>
                 <div className="font-display font-extrabold text-base mt-0.5">
                   {defenseMethod}
                 </div>
               </div>
 
-              <div className="bg-[#FAF9F5] border-[1.5px] border-[#1E242B] rounded-md px-3.5 py-2.5">
-                <div className="font-mono-tabular text-[11px] font-bold uppercase text-[#5A626E]">
-                  Mock Prediction Shift
+              <div className="bg-[#FBFAF7] border border-[#262D35] rounded-lg px-3.5 py-2.5">
+                <div className="font-mono-tabular text-[11px] font-bold uppercase text-[#64748B]">
+                  Biến đổi dự đoán (Mock)
                 </div>
                 <div className="font-display font-extrabold text-base mt-0.5 leading-snug">
                   {analysis.originalPred.predictedClass} →{' '}
@@ -673,21 +654,21 @@ export default function App() {
                 </div>
               </div>
 
-              <div className="bg-[#FAF9F5] border-[1.5px] border-[#1E242B] rounded-md px-3.5 py-2.5">
-                <div className="font-mono-tabular text-[11px] font-bold uppercase text-[#5A626E]">
-                  Defense Confidence Delta
+              <div className="bg-[#FBFAF7] border border-[#262D35] rounded-lg px-3.5 py-2.5">
+                <div className="font-mono-tabular text-[11px] font-bold uppercase text-[#64748B]">
+                  Chênh lệch độ tin cậy
                 </div>
                 <div className="font-mono-tabular font-bold text-base mt-0.5">
-                  {confDeltaFormatted} vs Attacked
+                  {confDeltaFormatted} so với bị tấn công
                 </div>
               </div>
             </div>
 
-            <div className="border-t border-[#D6D3C9] pt-3.5">
-              <h3 className="font-display font-extrabold text-base text-[#1E242B]">
+            <div className="border-t border-[#E4E2DA] pt-3.5">
+              <h3 className="font-display font-extrabold text-base text-[#262D35]">
                 {analysis.summaryHeadline}
               </h3>
-              <p className="text-sm text-[#333A44] leading-relaxed mt-1">
+              <p className="text-sm text-[#475569] leading-relaxed mt-1">
                 {analysis.summaryExplanation}
               </p>
             </div>

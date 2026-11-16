@@ -35,17 +35,17 @@ NEO_BRUTALISM_CSS = """
 @import url('https://fonts.googleapis.com/css2?family=Archivo:wght@700;800;900&family=Public+Sans:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap');
 
 :root {
-  --bg-canvas: #FAF9F5;
+  --bg-canvas: #FBFAF7;
   --bg-card: #FFFFFF;
-  --ink: #1E242B;
-  --ink-muted: #5A626E;
-  --accent-yellow: #FEF3C7;
-  --accent-blue: #60A5FA;
-  --accent-coral: #FFE4DF;
-  --accent-mint: #DCFCE7;
-  --border-w: 2px;
-  --shadow: 3px 3px 0px #1E242B;
-  --shadow-sm: 2px 2px 0px #1E242B;
+  --ink: #262D35;
+  --ink-muted: #64748B;
+  --accent-yellow: #FEF9E7;
+  --accent-blue: #93C5FD;
+  --accent-coral: #FFF0ED;
+  --accent-mint: #EAFBF0;
+  --border-w: 1.5px;
+  --shadow: 2px 2px 0px #262D35;
+  --shadow-sm: 1.5px 1.5px 0px #262D35;
 }
 
 html, body, [class*="css"] {
@@ -65,7 +65,7 @@ html, body, [class*="css"] {
 
 section[data-testid="stSidebar"] {
   background-color: #FFFFFF !important;
-  border-right: 2px solid #1E242B !important;
+  border-right: 1.5px solid #262D35 !important;
 }
 
 section[data-testid="stSidebar"] .block-container {
@@ -73,77 +73,33 @@ section[data-testid="stSidebar"] .block-container {
 }
 
 div[data-testid="stExpander"] {
-  background: #FAF9F5;
-  border: 2px solid #1E242B !important;
-  border-radius: 6px !important;
-  box-shadow: 2px 2px 0px #1E242B;
+  background: #FBFAF7;
+  border: 1.5px solid #262D35 !important;
+  border-radius: 8px !important;
+  box-shadow: 1.5px 1.5px 0px #262D35;
 }
 
 div[data-baseweb="select"] > div,
 div[data-testid="stFileUploaderDropzone"] {
-  border: 2px solid #1E242B !important;
-  border-radius: 6px !important;
+  border: 1.5px solid #262D35 !important;
+  border-radius: 8px !important;
   background-color: #FFFFFF !important;
-  box-shadow: 2px 2px 0px #1E242B;
+  box-shadow: 1.5px 1.5px 0px #262D35;
 }
 
 button[kind="primary"], button[kind="secondary"] {
-  border: 2px solid #1E242B !important;
-  border-radius: 6px !important;
-  box-shadow: 2px 2px 0px #1E242B !important;
+  border: 1.5px solid #262D35 !important;
+  border-radius: 8px !important;
+  box-shadow: 1.5px 1.5px 0px #262D35 !important;
   font-family: 'Archivo', sans-serif !important;
   font-weight: 800 !important;
 }
 
-.nb-header {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: center;
-  gap: 1rem;
-  background: #FFFFFF;
-  border: 2px solid #1E242B;
-  border-radius: 8px;
-  box-shadow: 3px 3px 0px #1E242B;
-  padding: 1rem 1.3rem;
-  margin-bottom: 1.2rem;
-}
-
-.nb-title {
-  font-family: 'Archivo', sans-serif;
-  font-weight: 900;
-  font-size: 1.7rem;
-  line-height: 1.05;
-  letter-spacing: -0.02em;
-  margin: 0;
-  color: #1E242B;
-}
-
-.nb-subtitle {
-  font-size: 0.9rem;
-  color: #4B5563;
-  margin: 0.3rem 0 0 0;
-  font-weight: 500;
-}
-
-.nb-demo-banner {
-  background: #FEF3C7;
-  border: 2px solid #1E242B;
-  border-radius: 6px;
-  box-shadow: 2px 2px 0px #1E242B;
-  padding: 0.45rem 0.85rem;
-  font-family: 'Space Mono', monospace;
-  font-weight: 700;
-  font-size: 0.78rem;
-  color: #1E242B;
-  white-space: nowrap;
-}
-
 .nb-card {
   background: #FFFFFF;
-  border: 2px solid #1E242B;
-  border-radius: 8px;
-  box-shadow: 3px 3px 0px #1E242B;
+  border: 1.5px solid #262D35;
+  border-radius: 12px;
+  box-shadow: 2px 2px 0px #262D35;
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -151,29 +107,29 @@ button[kind="primary"], button[kind="secondary"] {
 }
 
 .nb-card-band {
-  border-bottom: 2px solid #1E242B;
+  border-bottom: 1.5px solid #262D35;
   padding: 0.6rem 1rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
   font-family: 'Archivo', sans-serif;
   font-weight: 800;
-  font-size: 0.98rem;
+  font-size: 0.96rem;
   letter-spacing: 0.01em;
 }
 
-.band-original { background: #F1F5F9; color: #1E242B; }
-.band-attacked { background: #FFE4DF; color: #1E242B; }
-.band-defended { background: #DCFCE7; color: #1E242B; }
+.band-original { background: #F4F6F8; color: #262D35; }
+.band-attacked { background: #FFF0ED; color: #262D35; }
+.band-defended { background: #EAFBF0; color: #262D35; }
 
 .nb-card-tag {
   font-family: 'Space Mono', monospace;
-  font-size: 0.7rem;
+  font-size: 0.68rem;
   font-weight: 700;
   background: #FFFFFF;
-  border: 1.5px solid #1E242B;
-  border-radius: 4px;
-  padding: 0.12rem 0.42rem;
+  border: 1px solid #262D35;
+  border-radius: 6px;
+  padding: 0.12rem 0.45rem;
 }
 
 .nb-img-wrap {
@@ -182,9 +138,9 @@ button[kind="primary"], button[kind="secondary"] {
 }
 
 .nb-img-frame {
-  border: 2px solid #1E242B;
-  border-radius: 6px;
-  background: #181A1F;
+  border: 1.5px solid #262D35;
+  border-radius: 8px;
+  background: #1C2026;
   aspect-ratio: 1 / 1;
   overflow: hidden;
   display: flex;
@@ -205,9 +161,9 @@ button[kind="primary"], button[kind="secondary"] {
 
 .nb-label-kicker {
   font-family: 'Space Mono', monospace;
-  font-size: 0.7rem;
+  font-size: 0.68rem;
   font-weight: 700;
-  color: #5A626E;
+  color: #64748B;
   text-transform: uppercase;
   margin-bottom: 0.15rem;
 }
@@ -223,71 +179,71 @@ button[kind="primary"], button[kind="secondary"] {
 .nb-pred-class {
   font-family: 'Archivo', sans-serif;
   font-weight: 800;
-  font-size: 1.32rem;
+  font-size: 1.28rem;
   line-height: 1.1;
-  color: #1E242B;
+  color: #262D35;
 }
 
 .nb-conf-num {
   font-family: 'Space Mono', monospace;
   font-weight: 700;
-  font-size: 1.1rem;
-  color: #1E242B;
+  font-size: 1.05rem;
+  color: #262D35;
 }
 
 .nb-bar-track {
   width: 100%;
-  height: 12px;
-  background: #F3F2EC;
-  border: 1.5px solid #1E242B;
-  border-radius: 3px;
+  height: 10px;
+  background: #F4F3EE;
+  border: 1px solid #262D35;
+  border-radius: 4px;
   overflow: hidden;
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.7rem;
 }
 
 .nb-bar-fill {
   height: 100%;
-  border-right: 1.5px solid #1E242B;
+  border-right: 1px solid #262D35;
 }
 
 .nb-meta-box {
-  background: #FAF9F5;
-  border: 1.5px solid #1E242B;
-  border-radius: 6px;
+  background: #FBFAF7;
+  border: 1px solid #262D35;
+  border-radius: 8px;
   padding: 0.55rem 0.75rem;
   font-family: 'Space Mono', monospace;
   font-size: 0.74rem;
   line-height: 1.5;
-  color: #2C333D;
+  color: #334155;
 }
 
 .nb-status-line {
   font-family: 'Space Mono', monospace;
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   font-weight: 700;
   margin-bottom: 0.5rem;
-  color: #333A44;
+  color: #475569;
 }
 
 .nb-summary {
   margin-top: 1.3rem;
   background: #FFFFFF;
-  border: 2px solid #1E242B;
-  border-radius: 8px;
-  box-shadow: 3px 3px 0px #1E242B;
+  border: 1.5px solid #262D35;
+  border-radius: 12px;
+  box-shadow: 2px 2px 0px #262D35;
   overflow: hidden;
 }
 
 .nb-summary-head {
-  background: #FEF3C7;
-  border-bottom: 2px solid #1E242B;
+  background: #FEF9E7;
+  border-bottom: 1.5px solid #262D35;
   padding: 0.65rem 1.2rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
   font-family: 'Archivo', sans-serif;
   font-weight: 800;
-  font-size: 0.98rem;
+  font-size: 0.96rem;
 }
 
 .nb-summary-body {
@@ -302,9 +258,9 @@ button[kind="primary"], button[kind="secondary"] {
 }
 
 .nb-stat-block {
-  background: #FAF9F5;
-  border: 1.5px solid #1E242B;
-  border-radius: 6px;
+  background: #FBFAF7;
+  border: 1px solid #262D35;
+  border-radius: 8px;
   padding: 0.6rem 0.8rem;
 }
 
@@ -361,9 +317,9 @@ def _render_panel_card(
     conf_pct = max(0, min(100, int(round(pred.confidence * 100))))
     truth_note = ""
     if pred.is_correct is True:
-        truth_note = " · GROUND TRUTH MATCH"
+        truth_note = " · ĐÚNG NHÃN THỰC TẾ"
     elif pred.is_correct is False:
-        truth_note = " · MISCLASSIFIED"
+        truth_note = " · DỰ ĐOÁN SAI"
 
     meta_html = "<br>".join(pred.metadata_lines)
 
@@ -375,11 +331,11 @@ def _render_panel_card(
       </div>
       <div class="nb-img-wrap">
         <div class="nb-img-frame">
-          <img src="data:image/png;base64,{b64}" alt="{title} sample preview" />
+          <img src="data:image/png;base64,{b64}" alt="Xem trước {title}" />
         </div>
       </div>
       <div class="nb-card-body">
-        <div class="nb-label-kicker">Predicted Class</div>
+        <div class="nb-label-kicker">Lớp dự đoán (Predicted Class)</div>
         <div class="nb-pred-row">
           <div class="nb-pred-class">{pred.predicted_class}</div>
           <div class="nb-conf-num">{pred.confidence:.1%}</div>
@@ -406,28 +362,28 @@ if "selected_model" not in st.session_state:
 with st.sidebar:
     st.markdown(
         """
-        <div style="border:2px solid #1E242B; border-radius:6px; background:#FEF3C7; padding:0.65rem 0.85rem; box-shadow:2px 2px 0px #1E242B; margin-bottom:1rem;">
-          <div style="font-family:'Archivo',sans-serif; font-weight:800; font-size:0.95rem; line-height:1.1; color:#1E242B;">
-            CONFIGURATION PANEL
+        <div style="border:1.5px solid #262D35; border-radius:8px; background:#FEF9E7; padding:0.75rem 0.9rem; box-shadow:1.5px 1.5px 0px #262D35; margin-bottom:1rem;">
+          <div style="font-family:'Archivo',sans-serif; font-weight:900; font-size:1.08rem; line-height:1.15; color:#262D35;">
+            Adversarial Vision Lab
           </div>
-          <div style="font-family:'Space Mono',monospace; font-size:0.7rem; font-weight:700; margin-top:0.2rem; color:#4B5563;">
-            MOCK SIMULATION CONTROLS
+          <div style="font-family:'Space Mono',monospace; font-size:0.68rem; font-weight:700; margin-top:0.25rem; color:#525E6B;">
+            DEMO MODE · DỮ LIỆU GIẢ LẬP
           </div>
         </div>
         """,
         unsafe_allow_html=True,
     )
 
-    st.markdown("**1. Input Image**")
+    st.markdown("**1. Ảnh đầu vào**")
     uploaded_file = st.file_uploader(
-        "Upload custom image (replaces sample)",
+        "Tải ảnh lên (thay thế ảnh mẫu)",
         type=["png", "jpg", "jpeg", "webp"],
-        help="Uploaded images stay in browser session memory for mock preview only.",
+        help="Ảnh tải lên chỉ dùng để xem trước giả lập trong phiên hiện tại.",
     )
 
     sample_keys = list(SAMPLES.keys())
     selected_sample = st.selectbox(
-        "Or pick a built-in demo sample",
+        "Hoặc chọn ảnh mẫu có sẵn",
         options=sample_keys,
         index=sample_keys.index(st.session_state.selected_sample),
         format_func=lambda k: SAMPLES[k].label,
@@ -438,10 +394,10 @@ with st.sidebar:
         st.session_state.selected_model = SAMPLES[selected_sample].model_id
 
     st.markdown("---")
-    st.markdown("**2. Target Classifier (Mock)**")
+    st.markdown("**2. Chọn Model (Mock)**")
     model_keys = list(MODELS.keys())
     selected_model = st.selectbox(
-        "Model architecture",
+        "Kiến trúc Model",
         options=model_keys,
         index=model_keys.index(st.session_state.selected_model),
         format_func=lambda k: MODELS[k].name,
@@ -449,15 +405,15 @@ with st.sidebar:
     st.session_state.selected_model = selected_model
 
     st.markdown("---")
-    st.markdown("**3. Adversarial Attack (Mock)**")
+    st.markdown("**3. Tấn công (Adversarial Attack)**")
     attack_method = st.radio(
-        "Attack method",
+        "Phương pháp tấn công",
         options=ATTACK_METHODS,
         horizontal=True,
     )
 
     epsilon = st.slider(
-        "Perturbation budget (Epsilon ε)",
+        "Ngưỡng nhiễu (Epsilon ε)",
         min_value=0.00,
         max_value=0.30,
         value=0.08,
@@ -466,37 +422,21 @@ with st.sidebar:
     )
 
     st.markdown("---")
-    st.markdown("**4. Defense Mechanism (Mock)**")
+    st.markdown("**4. Phòng thủ (Defense)**")
     defense_method = st.selectbox(
-        "Defense strategy",
+        "Phương pháp phòng thủ",
         options=DEFENSE_METHODS,
         index=1,
     )
 
-    with st.expander("Advanced Settings", expanded=False):
-        pgd_steps = st.slider("PGD Steps", min_value=5, max_value=40, value=10, step=1)
-        pgd_alpha = st.slider("PGD Step Size (α)", min_value=0.002, max_value=0.050, value=0.010, step=0.002, format="%.3f")
+    with st.expander("Cài đặt nâng cao", expanded=False):
+        pgd_steps = st.slider("Số bước PGD (Steps)", min_value=5, max_value=40, value=10, step=1)
+        pgd_alpha = st.slider("Step Size (α)", min_value=0.002, max_value=0.050, value=0.010, step=0.002, format="%.3f")
         pgd_restarts = st.slider("PGD Restarts", min_value=1, max_value=5, value=1, step=1)
         blur_radius = st.slider("Gaussian Blur σ", min_value=0.5, max_value=4.0, value=1.8, step=0.1)
-        bit_depth = st.slider("Bit-depth Precision", min_value=1, max_value=6, value=3, step=1)
-        visual_amp = st.slider("Visual Noise Amplification (Preview)", min_value=0.5, max_value=2.5, value=1.2, step=0.1)
+        bit_depth = st.slider("Bit-depth (Số bit)", min_value=1, max_value=6, value=3, step=1)
+        visual_amp = st.slider("Khuếch đại nhiễu hiển thị", min_value=0.5, max_value=2.5, value=1.2, step=0.1)
 
-
-# --- Header Bar ---
-st.markdown(
-    """
-    <div class="nb-header">
-      <div>
-        <h1 class="nb-title">Adversarial Vision Lab</h1>
-        <p class="nb-subtitle">Single-page attack &amp; defense comparison workspace · Inspired by Irene Adversarial Vision Lab</p>
-      </div>
-      <div class="nb-demo-banner">
-        DEMO MODE · MOCK DATA ONLY
-      </div>
-    </div>
-    """,
-    unsafe_allow_html=True,
-)
 
 # --- Compute Mock Analysis ---
 uploaded_pil = Image.open(uploaded_file) if uploaded_file is not None else None
@@ -521,32 +461,32 @@ col1, col2, col3 = st.columns(3, gap="large")
 
 with col1:
     _render_panel_card(
-        title="ORIGINAL",
+        title="ẢNH GỐC",
         band_class="band-original",
-        badge_text="CLEAN",
+        badge_text="ORIGINAL · CLEAN",
         image=result.original_image,
         pred=result.original_pred,
-        bar_color="#60A5FA",
+        bar_color="#93C5FD",
     )
 
 with col2:
     _render_panel_card(
-        title="ATTACKED",
+        title="BỊ TẤN CÔNG",
         band_class="band-attacked",
         badge_text=f"{attack_method} · ε={epsilon:.2f}",
         image=result.attacked_image,
         pred=result.attacked_pred,
-        bar_color="#F87171",
+        bar_color="#FCA5A5",
     )
 
 with col3:
     _render_panel_card(
-        title="DEFENDED",
+        title="ĐÃ PHÒNG THỦ",
         band_class="band-defended",
         badge_text=defense_method.upper(),
         image=result.defended_image,
         pred=result.defended_pred,
-        bar_color="#34D399",
+        bar_color="#6EE7B7",
     )
 
 # --- Analysis Summary Section ---
@@ -562,26 +502,26 @@ st.markdown(
     f"""
     <div class="nb-summary">
       <div class="nb-summary-head">
-        <span>ANALYSIS SUMMARY</span>
-        <span class="nb-card-tag">SIMULATED METRICS</span>
+        <span>TÓM TẮT PHÂN TÍCH</span>
+        <span class="nb-card-tag">SỐ LIỆU GIẢ LẬP · KHÔNG CHẠY MODEL THẬT</span>
       </div>
       <div class="nb-summary-body">
         <div class="nb-summary-grid">
           <div class="nb-stat-block">
-            <div class="nb-stat-k">Selected Attack</div>
+            <div class="nb-stat-k">Attack đã chọn</div>
             <div class="nb-stat-v">{attack_method} (ε = {epsilon:.2f})</div>
           </div>
           <div class="nb-stat-block">
-            <div class="nb-stat-k">Selected Defense</div>
+            <div class="nb-stat-k">Defense đã chọn</div>
             <div class="nb-stat-v">{defense_method}</div>
           </div>
           <div class="nb-stat-block">
-            <div class="nb-stat-k">Mock Prediction Shift</div>
+            <div class="nb-stat-k">Biến đổi dự đoán (Mock)</div>
             <div class="nb-stat-v">{shift_text}</div>
           </div>
           <div class="nb-stat-block">
-            <div class="nb-stat-k">Defense Confidence Delta</div>
-            <div class="nb-stat-v">{conf_delta_str} vs Attacked</div>
+            <div class="nb-stat-k">Chênh lệch độ tin cậy</div>
+            <div class="nb-stat-v">{conf_delta_str} so với bị tấn công</div>
           </div>
         </div>
         <div class="nb-explanation">

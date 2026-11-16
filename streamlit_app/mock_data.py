@@ -345,11 +345,11 @@ def compute_mock_analysis(
         predicted_class=true_class,
         confidence=round(base_conf, 3),
         is_correct=True if has_ground_truth else None,
-        status_tag="CLEAN INPUT (MOCK)",
+        status_tag="ẢNH SẠCH (MOCK)",
         metadata_lines=[
             f"Model: {model.name}",
             f"Dataset: {model.dataset}",
-            "Perturbation: ε = 0.00",
+            "Nhiễu: ε = 0.00",
         ],
     )
 
@@ -360,19 +360,19 @@ def compute_mock_analysis(
     if epsilon <= 0.005:
         atk_class = true_class
         atk_conf = base_conf
-        atk_status = "NO PERTURBATION"
+        atk_status = "KHÔNG CÓ NHIỄU"
     elif attack_strength < flip_threshold:
         atk_class = true_class
         atk_conf = max(0.51, base_conf - attack_strength * 3.8)
-        atk_status = "CONFIDENCE DEGRADED (MOCK)"
+        atk_status = "ĐỘ TIN CẬY SUY GIẢM (MOCK)"
     elif attack_strength < 0.18:
         atk_class = target_misclass
         atk_conf = min(0.94, 0.56 + attack_strength * 2.1)
-        atk_status = "ATTACK SUCCEEDED (MOCK)"
+        atk_status = "TẤN CÔNG THÀNH CÔNG (MOCK)"
     else:
         atk_class = secondary_misclass
         atk_conf = min(0.985, 0.72 + attack_strength * 0.85)
-        atk_status = "HIGH-CONFIDENCE FOOL (MOCK)"
+        atk_status = "ĐÁNH LỪA ĐỘ TIN CẬY CAO (MOCK)"
 
     atk_meta = [f"Attack: {attack_method}", f"Epsilon (ε): {epsilon:.2f}"]
     if attack_method == "PGD":
@@ -392,36 +392,36 @@ def compute_mock_analysis(
     if defense_method == "None":
         def_class = atk_class
         def_conf = atk_conf
-        def_status = "UNDEFENDED (PASS-THROUGH)"
-        def_meta = ["Defense: None", "Input passed directly to standard model"]
+        def_status = "KHÔNG PHÒNG THỦ (PASS-THROUGH)"
+        def_meta = ["Defense: None", "Đưa trực tiếp ảnh bị tấn công vào model chuẩn"]
     elif defense_method == "PGD-AT":
         # Robust model checkpoint resists up to ~0.16 mock epsilon
         if attack_strength < 0.24:
             def_class = true_class
             def_conf = max(0.68, base_conf - 0.06 - attack_strength * 0.65)
-            def_status = "RECOVERED BY ROBUST MODEL (MOCK)"
+            def_status = "MODEL BỀN VỮNG ĐÃ KHÔI PHỤC (MOCK)"
         else:
             def_class = target_misclass
             def_conf = min(0.79, 0.48 + attack_strength * 0.7)
-            def_status = "OVERWHELMED AT HIGH ε (MOCK)"
+            def_status = "VƯỢT NGƯỠNG Ở ε CAO (MOCK)"
         def_meta = [
             "Defense: PGD-AT (Adversarial Training)",
-            "Evaluated on robust checkpoint (Mock)",
+            "Đánh giá trên checkpoint bền vững (Mock)",
         ]
     elif defense_method == "Gaussian Blur":
         # Moderate blur suppresses high-frequency noise, but too much blur or high eps degrades accuracy
         if epsilon <= 0.12 and 0.8 <= blur_radius <= 2.6:
             def_class = true_class
             def_conf = max(0.58, base_conf - 0.14 - epsilon * 1.1)
-            def_status = "NOISE SMOOTHED (MOCK)"
+            def_status = "ĐÃ LÀM MỊN NHIỄU (MOCK)"
         elif epsilon <= 0.05:
             def_class = true_class
             def_conf = max(0.55, base_conf - 0.12)
-            def_status = "RECOVERED (MOCK)"
+            def_status = "ĐÃ KHÔI PHỤC (MOCK)"
         else:
             def_class = secondary_misclass if blur_radius > 2.6 else target_misclass
             def_conf = min(0.82, 0.44 + epsilon * 1.1)
-            def_status = "PARTIAL RECOVERY / BLUR LOSS (MOCK)"
+            def_status = "KHÔI PHỤC MỘT PHẦN / MỜ CHI TIẾT (MOCK)"
         def_meta = [
             "Defense: Gaussian Blur (Input Transform)",
             f"Kernel σ = {blur_radius:.1f}px",
@@ -430,14 +430,14 @@ def compute_mock_analysis(
         if epsilon <= 0.14 and 2 <= bit_depth <= 4:
             def_class = true_class
             def_conf = max(0.61, base_conf - 0.11 - epsilon * 0.95)
-            def_status = "QUANTIZATION RECOVERED (MOCK)"
+            def_status = "LƯỢNG TỬ HÓA ĐÃ KHÔI PHỤC (MOCK)"
         else:
             def_class = target_misclass
             def_conf = min(0.84, 0.49 + epsilon * 1.05)
-            def_status = "QUANTIZATION INSUFFICIENT (MOCK)"
+            def_status = "LƯỢNG TỬ HÓA CHƯA ĐỦ MẠNH (MOCK)"
         def_meta = [
             "Defense: Bit-depth Reduction (Input Transform)",
-            f"Precision: {bit_depth}-bit ({1 << bit_depth} levels/channel)",
+            f"Độ phân giải: {bit_depth}-bit ({1 << bit_depth} mức/kênh)",
         ]
 
     def_pred = PredictionState(
@@ -453,38 +453,38 @@ def compute_mock_analysis(
     recovered = def_class == true_class
 
     if epsilon <= 0.005:
-        headline = "Baseline Check: Zero Perturbation Applied"
+        headline = "Kiểm tra gốc (Baseline): Chưa thêm nhiễu đối nghịch"
         explanation = (
-            f"With ε = 0.00, no adversarial perturbation is added to the {true_class} input. "
-            f"Both Original and Attacked panels report '{true_class}' ({orig_pred.confidence:.1%})."
+            f"Với ε = 0.00, chưa có nhiễu đối nghịch nào được cộng vào ảnh '{true_class}'. "
+            f"Cả hai khung Ảnh gốc và Bị tấn công đều dự đoán '{true_class}' ({orig_pred.confidence:.1%})."
         )
     elif fooled and defense_method == "None":
-        headline = f"{attack_method} Fooled {model.name}: {true_class} → {atk_class}"
+        headline = f"{attack_method} đã đánh lừa {model.name}: {true_class} → {atk_class}"
         explanation = (
-            f"At ε = {epsilon:.2f}, the mock {attack_method} perturbation shifted the model's decision "
-            f"from '{true_class}' ({orig_pred.confidence:.1%}) to '{atk_class}' ({atk_pred.confidence:.1%}). "
-            f"Because Defense is set to None, the Defended panel mirrors the unmitigated attack."
+            f"Tại mức ε = {epsilon:.2f}, nhiễu giả lập {attack_method} làm model đổi dự đoán "
+            f"từ '{true_class}' ({orig_pred.confidence:.1%}) sang '{atk_class}' ({atk_pred.confidence:.1%}). "
+            f"Do Defense đang chọn None, khung Đã phòng thủ giữ nguyên kết quả bị tấn công."
         )
     elif fooled and recovered:
-        headline = f"{defense_method} Restored '{true_class}' After {attack_method} Attack"
+        headline = f"{defense_method} đã khôi phục dự đoán '{true_class}' sau tấn công {attack_method}"
         explanation = (
-            f"The mock {attack_method} attack (ε = {epsilon:.2f}) fooled the standard classifier into predicting "
-            f"'{atk_class}' ({atk_pred.confidence:.1%}). Applying {defense_method} recovered the prediction back to "
-            f"'{def_class}' ({def_pred.confidence:.1%}) in this simulated demo scenario."
+            f"Tấn công giả lập {attack_method} (ε = {epsilon:.2f}) khiến model chuẩn dự đoán nhầm sang "
+            f"'{atk_class}' ({atk_pred.confidence:.1%}). Khi áp dụng {defense_method}, dự đoán được khôi phục về "
+            f"'{def_class}' với độ tin cậy {def_pred.confidence:.1%}."
         )
     elif fooled and not recovered:
-        headline = f"{defense_method} Failed to Fully Recover at ε = {epsilon:.2f}"
+        headline = f"{defense_method} chưa khôi phục được lớp đúng tại ε = {epsilon:.2f}"
         explanation = (
-            f"Under a strong mock {attack_method} perturbation (ε = {epsilon:.2f}), the prediction flipped from "
-            f"'{true_class}' to '{atk_class}'. {defense_method} altered the confidence to {def_pred.confidence:.1%}, "
-            f"but could not restore the original class '{true_class}'."
+            f"Dưới nhiễu giả lập {attack_method} mạnh (ε = {epsilon:.2f}), dự đoán bị lệch từ "
+            f"'{true_class}' sang '{atk_class}'. {defense_method} thay đổi độ tin cậy thành {def_pred.confidence:.1%} "
+            f"nhưng chưa khôi phục lại được nhãn '{true_class}'."
         )
     else:
-        headline = f"Model Held Prediction '{true_class}' Under Light {attack_method} (ε = {epsilon:.2f})"
+        headline = f"Model giữ vững dự đoán '{true_class}' trước {attack_method} nhẹ (ε = {epsilon:.2f})"
         explanation = (
-            f"At ε = {epsilon:.2f}, the perturbation reduced confidence from {orig_pred.confidence:.1%} to "
-            f"{atk_pred.confidence:.1%} without flipping the top class. Applying {defense_method} keeps the output "
-            f"at '{def_class}' ({def_pred.confidence:.1%})."
+            f"Tại ε = {epsilon:.2f}, nhiễu làm giảm độ tin cậy từ {orig_pred.confidence:.1%} xuống "
+            f"{atk_pred.confidence:.1%} nhưng chưa đủ để lật nhãn dự đoán. Áp dụng {defense_method} tiếp tục giữ "
+            f"kết quả '{def_class}' ({def_pred.confidence:.1%})."
         )
 
     return MockAnalysisResult(

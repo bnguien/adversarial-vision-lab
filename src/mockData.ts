@@ -201,11 +201,11 @@ export function computeMockMetrics(config: AnalysisConfig): MockAnalysisOutput {
     predictedClass: trueClass,
     confidence: Number(baseConf.toFixed(3)),
     isCorrect: hasGroundTruth ? true : null,
-    statusTag: 'CLEAN INPUT (MOCK)',
+    statusTag: 'ẢNH SẠCH (MOCK)',
     metadataLines: [
       `Model: ${model.name}`,
       `Dataset: ${model.dataset}`,
-      'Perturbation: ε = 0.00',
+      'Nhiễu: ε = 0.00',
     ],
   };
 
@@ -218,24 +218,24 @@ export function computeMockMetrics(config: AnalysisConfig): MockAnalysisOutput {
 
   let atkClass = trueClass;
   let atkConf = baseConf;
-  let atkStatus = 'NO PERTURBATION';
+  let atkStatus = 'KHÔNG CÓ NHIỄU';
 
   if (config.epsilon <= 0.005) {
     atkClass = trueClass;
     atkConf = baseConf;
-    atkStatus = 'NO PERTURBATION';
+    atkStatus = 'KHÔNG CÓ NHIỄU';
   } else if (attackStrength < flipThreshold) {
     atkClass = trueClass;
     atkConf = Math.max(0.51, baseConf - attackStrength * 3.8);
-    atkStatus = 'CONFIDENCE DEGRADED (MOCK)';
+    atkStatus = 'ĐỘ TIN CẬY SUY GIẢM (MOCK)';
   } else if (attackStrength < 0.18) {
     atkClass = targetMisclass;
     atkConf = Math.min(0.94, 0.56 + attackStrength * 2.1);
-    atkStatus = 'ATTACK SUCCEEDED (MOCK)';
+    atkStatus = 'TẤN CÔNG THÀNH CÔNG (MOCK)';
   } else {
     atkClass = secondaryMisclass;
     atkConf = Math.min(0.985, 0.72 + attackStrength * 0.85);
-    atkStatus = 'HIGH-CONFIDENCE FOOL (MOCK)';
+    atkStatus = 'ĐÁNH LỪA ĐỘ TIN CẬY CAO (MOCK)';
   }
 
   const atkMeta = [
@@ -257,25 +257,25 @@ export function computeMockMetrics(config: AnalysisConfig): MockAnalysisOutput {
   // Defense evaluation
   let defClass = atkClass;
   let defConf = atkConf;
-  let defStatus = 'UNDEFENDED (PASS-THROUGH)';
+  let defStatus = 'KHÔNG PHÒNG THỦ (PASS-THROUGH)';
   let defMeta: string[] = [
     'Defense: None',
-    'Input passed directly to standard model',
+    'Đưa trực tiếp ảnh bị tấn công vào model chuẩn',
   ];
 
   if (config.defenseMethod === 'PGD-AT') {
     if (attackStrength < 0.24) {
       defClass = trueClass;
       defConf = Math.max(0.68, baseConf - 0.06 - attackStrength * 0.65);
-      defStatus = 'RECOVERED BY ROBUST MODEL (MOCK)';
+      defStatus = 'MODEL BỀN VỮNG ĐÃ KHÔI PHỤC (MOCK)';
     } else {
       defClass = targetMisclass;
       defConf = Math.min(0.79, 0.48 + attackStrength * 0.7);
-      defStatus = 'OVERWHELMED AT HIGH ε (MOCK)';
+      defStatus = 'VƯỢT NGƯỠNG Ở ε CAO (MOCK)';
     }
     defMeta = [
       'Defense: PGD-AT (Adversarial Training)',
-      'Evaluated on robust checkpoint (Mock)',
+      'Đánh giá trên checkpoint bền vững (Mock)',
     ];
   } else if (config.defenseMethod === 'Gaussian Blur') {
     if (
@@ -285,16 +285,16 @@ export function computeMockMetrics(config: AnalysisConfig): MockAnalysisOutput {
     ) {
       defClass = trueClass;
       defConf = Math.max(0.58, baseConf - 0.14 - config.epsilon * 1.1);
-      defStatus = 'NOISE SMOOTHED (MOCK)';
+      defStatus = 'ĐÃ LÀM MỊN NHIỄU (MOCK)';
     } else if (config.epsilon <= 0.05) {
       defClass = trueClass;
       defConf = Math.max(0.55, baseConf - 0.12);
-      defStatus = 'RECOVERED (MOCK)';
+      defStatus = 'ĐÃ KHÔI PHỤC (MOCK)';
     } else {
       defClass =
         config.blurRadius > 2.6 ? secondaryMisclass : targetMisclass;
       defConf = Math.min(0.82, 0.44 + config.epsilon * 1.1);
-      defStatus = 'PARTIAL RECOVERY / BLUR LOSS (MOCK)';
+      defStatus = 'KHÔI PHỤC MỘT PHẦN / MỜ CHI TIẾT (MOCK)';
     }
     defMeta = [
       'Defense: Gaussian Blur (Input Transform)',
@@ -308,15 +308,15 @@ export function computeMockMetrics(config: AnalysisConfig): MockAnalysisOutput {
     ) {
       defClass = trueClass;
       defConf = Math.max(0.61, baseConf - 0.11 - config.epsilon * 0.95);
-      defStatus = 'QUANTIZATION RECOVERED (MOCK)';
+      defStatus = 'LƯỢNG TỬ HÓA ĐÃ KHÔI PHỤC (MOCK)';
     } else {
       defClass = targetMisclass;
       defConf = Math.min(0.84, 0.49 + config.epsilon * 1.05);
-      defStatus = 'QUANTIZATION INSUFFICIENT (MOCK)';
+      defStatus = 'LƯỢNG TỬ HÓA CHƯA ĐỦ MẠNH (MOCK)';
     }
     defMeta = [
       'Defense: Bit-depth Reduction (Input Transform)',
-      `Precision: ${config.bitDepth}-bit (${1 << config.bitDepth} levels/ch)`,
+      `Độ phân giải: ${config.bitDepth}-bit (${1 << config.bitDepth} mức/kênh)`,
     ];
   }
 
@@ -334,20 +334,20 @@ export function computeMockMetrics(config: AnalysisConfig): MockAnalysisOutput {
   let summaryExplanation = '';
 
   if (config.epsilon <= 0.005) {
-    summaryHeadline = 'Baseline Check: Zero Perturbation Applied';
-    summaryExplanation = `With ε = 0.00, no adversarial perturbation is added to the ${trueClass} input. Both Original and Attacked panels report "${trueClass}" (${(originalPred.confidence * 100).toFixed(1)}%).`;
+    summaryHeadline = 'Kiểm tra gốc (Baseline): Chưa thêm nhiễu đối nghịch';
+    summaryExplanation = `Với ε = 0.00, chưa có nhiễu đối nghịch nào được cộng vào ảnh "${trueClass}". Cả hai khung Ảnh gốc và Bị tấn công đều dự đoán "${trueClass}" (${(originalPred.confidence * 100).toFixed(1)}%).`;
   } else if (fooled && config.defenseMethod === 'None') {
-    summaryHeadline = `${config.attackMethod} Fooled ${model.name}: ${trueClass} → ${atkClass}`;
-    summaryExplanation = `At ε = ${config.epsilon.toFixed(2)}, the mock ${config.attackMethod} perturbation shifted the model decision from "${trueClass}" (${(originalPred.confidence * 100).toFixed(1)}%) to "${atkClass}" (${(attackedPred.confidence * 100).toFixed(1)}%). Because Defense is set to None, the Defended panel mirrors the unmitigated attack.`;
+    summaryHeadline = `${config.attackMethod} đã đánh lừa ${model.name}: ${trueClass} → ${atkClass}`;
+    summaryExplanation = `Tại mức ε = ${config.epsilon.toFixed(2)}, nhiễu giả lập ${config.attackMethod} làm model đổi dự đoán từ "${trueClass}" (${(originalPred.confidence * 100).toFixed(1)}%) sang "${atkClass}" (${(attackedPred.confidence * 100).toFixed(1)}%). Do Defense đang chọn None, khung Đã phòng thủ giữ nguyên kết quả bị tấn công.`;
   } else if (fooled && recovered) {
-    summaryHeadline = `${config.defenseMethod} Restored "${trueClass}" After ${config.attackMethod} Attack`;
-    summaryExplanation = `The mock ${config.attackMethod} attack (ε = ${config.epsilon.toFixed(2)}) fooled the standard classifier into predicting "${atkClass}" (${(attackedPred.confidence * 100).toFixed(1)}%). Applying ${config.defenseMethod} recovered the prediction back to "${defClass}" (${(defendedPred.confidence * 100).toFixed(1)}%) in this simulated demo.`;
+    summaryHeadline = `${config.defenseMethod} đã khôi phục dự đoán "${trueClass}" sau tấn công ${config.attackMethod}`;
+    summaryExplanation = `Tấn công giả lập ${config.attackMethod} (ε = ${config.epsilon.toFixed(2)}) khiến model chuẩn dự đoán nhầm sang "${atkClass}" (${(attackedPred.confidence * 100).toFixed(1)}%). Khi áp dụng ${config.defenseMethod}, dự đoán được khôi phục về "${defClass}" với độ tin cậy ${(defendedPred.confidence * 100).toFixed(1)}%.`;
   } else if (fooled && !recovered) {
-    summaryHeadline = `${config.defenseMethod} Failed to Recover at ε = ${config.epsilon.toFixed(2)}`;
-    summaryExplanation = `Under a strong mock ${config.attackMethod} perturbation (ε = ${config.epsilon.toFixed(2)}), the prediction flipped from "${trueClass}" to "${atkClass}". ${config.defenseMethod} adjusted the confidence to ${(defendedPred.confidence * 100).toFixed(1)}%, but could not restore "${trueClass}".`;
+    summaryHeadline = `${config.defenseMethod} chưa khôi phục được lớp đúng tại ε = ${config.epsilon.toFixed(2)}`;
+    summaryExplanation = `Dưới nhiễu giả lập ${config.attackMethod} mạnh (ε = ${config.epsilon.toFixed(2)}), dự đoán bị lệch từ "${trueClass}" sang "${atkClass}". ${config.defenseMethod} thay đổi độ tin cậy thành ${(defendedPred.confidence * 100).toFixed(1)}% nhưng chưa khôi phục lại được nhãn "${trueClass}".`;
   } else {
-    summaryHeadline = `Model Held "${trueClass}" Under Light ${config.attackMethod} (ε = ${config.epsilon.toFixed(2)})`;
-    summaryExplanation = `At ε = ${config.epsilon.toFixed(2)}, the perturbation lowered confidence from ${(originalPred.confidence * 100).toFixed(1)}% to ${(attackedPred.confidence * 100).toFixed(1)}% without flipping the top class. Applying ${config.defenseMethod} holds the output at "${defClass}" (${(defendedPred.confidence * 100).toFixed(1)}%).`;
+    summaryHeadline = `Model giữ vững dự đoán "${trueClass}" trước ${config.attackMethod} nhẹ (ε = ${config.epsilon.toFixed(2)})`;
+    summaryExplanation = `Tại ε = ${config.epsilon.toFixed(2)}, nhiễu làm giảm độ tin cậy từ ${(originalPred.confidence * 100).toFixed(1)}% xuống ${(attackedPred.confidence * 100).toFixed(1)}% nhưng chưa đủ để lật nhãn dự đoán. Áp dụng ${config.defenseMethod} tiếp tục giữ kết quả "${defClass}" (${(defendedPred.confidence * 100).toFixed(1)}%).`;
   }
 
   return {
